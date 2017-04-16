@@ -25,26 +25,11 @@ returns<-function(tiker){
 }
 
 
-garch<-function(tiker,alpha, beta, omega){
-  # enrich the garch volatility model 
-  tiker$return_square <-tiker$return^2
-  tiker$conditional_var[1] <- var(tiker$return)
-  tiker$conditional_var[2:length(tiker$return)] <- c(omega+alpha*tiker$return_square[2:length(tiker$return)]+beta*tiker$conditional_var[1:length(tiker$return)-1])
-  
-  if (((alpha + beta)<= 1) && (tiker$conditional_var>0) ){
-    tiker$log_likelihood = -1/2*(log(2*pi)+log(tiker$conditional_var)+tiker$return_square/tiker$conditional_var)
-    
-  } 
-  return(tiker)
-}
-
-
-
 
 
 # choosing date from 2010-01-01 to 2015-12-31
-start_date <- '2010-01-04'
-end_date<-'2015-12-31'
+start_date <- '2010-01-05'
+end_date<-'2010-02-01'
 
 dates<-function(x){
   #functions to slice data
@@ -70,23 +55,168 @@ dates<-function(x){
 #   return(tiker)
 # }
 
-alpha = 0.1
-beta = 0.85
-omega = 0.000005
 
 #apply to all secuitties
 for (i in portfolio){
-  assign(i,garch(dates(returns(tik(i)))))
+  assign(i,dates(returns(tik(i))))
 }
 
 
-MLE<-function(tiker, alpha, beta, omega){
+garch<-function(tiker,alpha, beta, omega){
+  # enrich the garch volatility model 
+  tiker$return_square <-tiker$return^2
+  len = length(tiker$return)
+  tiker$conditional_var[1] <- c(var(tiker$return))
+  for (i in (1:len)){
+  tiker$conditional_var[2:len] <- c(omega+alpha*tiker$return_square[1:len-1]+beta*tiker$conditional_var[1:len-1])
+  }
+  for (i in (1:len)){
+  if (((alpha + beta)<= 1) && (tiker$conditional_var>0) ){
+    tiker$log_likelihood[i] = -1/2*(log(2*pi)+log(tiker$conditional_var[i])+tiker$return_square[i]/tiker$conditional_var[i])
+  } 
+  else{
+    tiker$log_likelihood[i] = c(-10000)
+  }
+  }
+  return(tiker)
+}
+
+
+garch_leverage<-function(tiker,alpha, beta, omega, theta){
+  # enrich the garch volatility model 
+  tiker$return_square <-tiker$return^2
+  len = length(tiker$return)
+  tiker$conditional_var[1] <- c(var(tiker$return))
+  for (i in (1:len)){
+    tiker$conditional_var[2:len] <- c(omega+alpha*(tiker$return[1:len-1]-theta*sqrt(tiker$conditional_var[1:len-1]))^2+beta*tiker$conditional_var[1:len-1])
+  }
+  for (i in (1:len)){
+  if (   (  (alpha *(1 + theta^2)+beta) <= 1  )  &&  (tiker$conditional_var[i]>0)   ){
+     
+    tiker$log_likelihood[i] = -1/2*(log(2*pi)+log(tiker$conditional_var[i])+tiker$return_square[i]/tiker$conditional_var[i])
+    
+  } 
+  else{
+    
+    tiker$log_likelihood[i] = c(-10000)
+  }
+  }
+  return(tiker)
+}
+
+
+
+
+
+
+
+
+# #initial value
+# alpha = 0.1
+# beta = 0.85
+# omega = 0.000005
+# theta = 0.5
+
+MLE<-function(tiker,x){
   #functions to cal MLE
+  alpha = x[1]
+  beta = x[2]
+  omega = var(tiker$return)*(1-alpha-beta)
   
-  s = sum(tiker$log_likelihood)
+
+  tiker_temp = garch(tiker, alpha, beta, omega)
+  s = sum(tiker_temp$log_likelihood)
   return(s)
 }
 
 
-optimize(f = MLE(ticker = `CL1 Comdty`,alpha = 0.1,beta = 0.85,omega =  0.000005), interval = c(1,6),maximum = TRUE)
+MLE_leverage<-function(tiker,x){
+  #functions to cal MLE
+  alpha = x[1]
+  beta = x[2]
+  omega  =x[3]
+  theta = x[4]
+  
+  
+  tiker_temp = garch_leverage(tiker, alpha, beta, omega,theta)
+  s = sum(tiker_temp$log_likelihood)
+  return(s)
+}
+
+
+opt<-function(ticker){
+  
+res = optim(par = c(0.1,0.85),MLE,tiker = ticker,lower =c(0,0), method="L-BFGS-B",control=list(fnscale=-1))
+print(res)
+x = c(res$par)
+x = c(x,var(ticker$return)*(1-x[1]-x[2]))
+mmm <- garch(ticker,x[1],x[2],x[3])
+return(mmm)
+
+}
+
+
+opt_leverage<-function(ticker){
+  
+  res = optim(par = c(0.1,0.85,0.000005,0.5),MLE_leverage,tiker = ticker,lower =c(0,0,0,0), method="L-BFGS-B",control=list(fnscale=-1))
+  print(res)
+  x = c(res$par)
+  
+  mmm <- garch_leverage(ticker,x[1],x[2],x[3],x[4])
+  return(mmm)
+  
+}
+
+
+#opt_leverage(MSFT)
+
+x=c(0.016190,0.890790,1.30E-05,1.450219)
+x =c(0.1,0.85,0.000005,0.5)
+x =c(0,0,0,1)
+jj<-garch_leverage(MSFT,0,0,0,1)
+
+#jj<-garch(MSFT,0,0,0,1)
+
+sum(jj$log_likelihood)
+
+MLE_leverage(MSFT,x)
+
+
+res = optim(par = c(0.1,0.85,0.000005,0.5),MLE_leverage,tiker = MSFT,lower =c(0,0,0,0),method="L-BFGS-B",control=list(trace=6,fnscale=-1))
+print(res)
+
+
+jj<-opt_leverage(MSFT)
+
+
+
+
+#garch(1,1) with leverage effect
+#question 4 
+
+
+# #apply to all secuitties
+# for (i in portfolio){
+#   assign(i,opt_leverage(dates(returns(tik(i)))))
+# }
+
+
+
+
+
+
+
+#opt(MSFT)
+
+
+
+# #garch(1,1) without leverage effect
+# #question 3, variance targeting
+
+# #apply to all secuitties
+# for (i in portfolio){
+#   assign(i,opt(dates(returns(tik(i)))))
+# }
+
+
 
