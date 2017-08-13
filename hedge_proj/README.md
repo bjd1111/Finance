@@ -1,13 +1,13 @@
-
-# Hedge Project
-
-
------------------
+Hedge Project
+==========
 
 
-\begin{equation}
-    h_i = p_i + \sum_{j=1}^m c_j p^j_i,
-\end{equation}
+![equation](http://latex.codecogs.com/gif.latex?h_i%20%3D%20p_i%20&plus;%20%5Csum_%7Bj%3D1%7D%5Em%20c_j%20p%5Ej_i%2C)  
+
+
+
+
+
 
 
 ## What is it
