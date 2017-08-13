@@ -37,5 +37,5 @@ git clone https://github.com/bjd1111/Finance/tree/master/hedge_proj
 ```
 
 ## Latest update
-2017/08/13 readme update
+**[2017-08-13]** readme update
 
