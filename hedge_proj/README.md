@@ -36,50 +36,6 @@ https://github.com/bjd1111/Finance/tree/master/hedge_proj
 git clone https://github.com/bjd1111/Finance/tree/master/hedge_proj
 ```
 
-
-## Dependencies
-- [NumPy](http://www.numpy.org): 1.7.0 or higher
-- [python-dateutil](https://labix.org/python-dateutil): 1.5 or higher
-- [pytz](https://pythonhosted.org/pytz)
-    - Needed for time zone support with ``pandas.date_range``
-
-See the [full installation instructions](https://pandas.pydata.org/pandas-docs/stable/install.html#dependencies)
-for recommended and optional dependencies.
-
-## Installation from sources
-To install pandas from source you need Cython in addition to the normal
-dependencies above. Cython can be installed from pypi:
-
-```sh
-pip install cython
-```
-
-In the `pandas` directory (same one where you found this file after
-cloning the git repo), execute:
-
-```sh
-python setup.py install
-```
-
-or for installing in [development mode](https://pip.pypa.io/en/latest/reference/pip_install.html#editable-installs):
-
-```sh
-python setup.py develop
-```
-
-Alternatively, you can use `pip` if you want all the dependencies pulled
-in automatically (the `-e` option is for installing it in [development
-mode](https://pip.pypa.io/en/latest/reference/pip_install.html#editable-installs)):
-
-```sh
-pip install -e .
-```
-
-See the full instructions for [installing from source](https://pandas.pydata.org/pandas-docs/stable/install.html#installing-from-source).
-
-## License
-[BSD 3](LICENSE)
-
 ## Documentation
 The official documentation is hosted on PyData.org: https://pandas.pydata.org/pandas-docs/stable
 
