@@ -12,7 +12,7 @@ they carry out these tasks. This project provie several ideas about how to
 hedging, different ways to hedging(minimun variance, VaR, CVaR, etc.), and 
 the performance of hedging. 
 
-## the Basic Hedge Equation
+## Basic Hedge Equation
 <div align="center">
   <img src="https://github.com/bjd1111/Finance/blob/master/hedge_proj/doc/formula.gif"><br>
 </div>
