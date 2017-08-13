@@ -1,36 +1,34 @@
 
-# hedge project
+# Hedge Project
 
 
 -----------------
 
-
+%
+\begin{equation}
+    h_i = p_i + \sum_{j=1}^m c_j p^j_i,
+\end{equation}
+%
 
 ## What is it
 
-**pandas** is a Python package providing fast, flexible, and expressive data
-structures designed to make working with "relational" or "labeled" data both
-easy and intuitive. It aims to be the fundamental high-level building block for
-doing practical, **real world** data analysis in Python. Additionally, it has
-the broader goal of becoming **the most powerful and flexible open source data
-analysis / manipulation tool available in any language**. It is already well on
-its way toward this goal.
+**Hedging** is an important aspect of portfolio management. Portfolio 
+managers are often required to stay within risk limits; for example, 
+they cannot let their volatility be to high or value-at-risk so low. 
+Also, there are times when market conditions lead them to reduce the 
+risk of their portfolio. Hedging is the primary mechanism through which 
+they carry out these tasks. This project provie several ideas about how to 
+hedging, different ways to hedging(minimun variance, VaR, CVaR, etc.), and 
+the performance of hedging. 
+
 
 ## Main Features
-Here are just a few of the things that pandas does well:
+Here are just a few of the things that this project provide:
 
-  - Easy handling of [**missing data**][missing-data] (represented as
-    `NaN`) in floating point as well as non-floating point data
-  - Size mutability: columns can be [**inserted and
-    deleted**][insertion-deletion] from DataFrame and higher dimensional
-    objects
-  - Automatic and explicit [**data alignment**][alignment]: objects can
-    be explicitly aligned to a set of labels, or the user can simply
-    ignore the labels and let `Series`, `DataFrame`, etc. automatically
-    align the data for you in computations
-  - Powerful, flexible [**group by**][groupby] functionality to perform
-    split-apply-combine operations on data sets, for both aggregating
-    and transforming data
+  - Gathering data from google finance(or fred, if specified)
+  - Portfolio returns overview
+  - Caculate hedge ratio(weights for hedge securities) using different method(minimun variance, VaR, CVaR) under different lambda
+  - Perfomance 
   - Make it [**easy to convert**][conversion] ragged,
     differently-indexed data in other Python and NumPy data structures
     into DataFrame objects
