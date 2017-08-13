@@ -27,43 +27,15 @@ Here are just a few of the things that this project provide:
   - Caculate hedge ratio(weights for hedge securities) using different method(minimun variance, VaR, CVaR) under different lambda(           weights control of whole hedge securities)
   - Perfomance analysis for different method (sharp ratio, cumulative return, variance)
   
-
-
-   [missing-data]: https://pandas.pydata.org/pandas-docs/stable/missing_data.html#working-with-missing-data
-   [insertion-deletion]: https://pandas.pydata.org/pandas-docs/stable/dsintro.html#column-selection-addition-deletion
-   [alignment]: https://pandas.pydata.org/pandas-docs/stable/dsintro.html?highlight=alignment#intro-to-data-structures
-   [groupby]: https://pandas.pydata.org/pandas-docs/stable/groupby.html#group-by-split-apply-combine
-   [conversion]: https://pandas.pydata.org/pandas-docs/stable/dsintro.html#dataframe
-   [slicing]: https://pandas.pydata.org/pandas-docs/stable/indexing.html#slicing-ranges
-   [fancy-indexing]: https://pandas.pydata.org/pandas-docs/stable/indexing.html#advanced-indexing-with-ix
-   [subsetting]: https://pandas.pydata.org/pandas-docs/stable/indexing.html#boolean-indexing
-   [merging]: https://pandas.pydata.org/pandas-docs/stable/merging.html#database-style-dataframe-joining-merging
-   [joining]: https://pandas.pydata.org/pandas-docs/stable/merging.html#joining-on-index
-   [reshape]: https://pandas.pydata.org/pandas-docs/stable/reshaping.html#reshaping-and-pivot-tables
-   [pivot-table]: https://pandas.pydata.org/pandas-docs/stable/reshaping.html#pivot-tables-and-cross-tabulations
-   [mi]: https://pandas.pydata.org/pandas-docs/stable/indexing.html#hierarchical-indexing-multiindex
-   [flat-files]: https://pandas.pydata.org/pandas-docs/stable/io.html#csv-text-files
-   [excel]: https://pandas.pydata.org/pandas-docs/stable/io.html#excel-files
-   [db]: https://pandas.pydata.org/pandas-docs/stable/io.html#sql-queries
-   [hdfstore]: https://pandas.pydata.org/pandas-docs/stable/io.html#hdf5-pytables
-   [timeseries]: https://pandas.pydata.org/pandas-docs/stable/timeseries.html#time-series-date-functionality
-
 ## Where to get it
 The source code is currently hosted on GitHub at:
-https://github.com/pandas-dev/pandas
+https://github.com/bjd1111/Finance/tree/master/hedge_proj
 
-Binary installers for the latest released version are available at the [Python
-package index](https://pypi.python.org/pypi/pandas) and on conda.
 
 ```sh
-# conda
-conda install pandas
+git clone https://github.com/bjd1111/Finance/tree/master/hedge_proj
 ```
 
-```sh
-# or PyPI
-pip install pandas
-```
 
 ## Dependencies
 - [NumPy](http://www.numpy.org): 1.7.0 or higher
