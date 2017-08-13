@@ -1,15 +1,6 @@
 Hedge Project
 ==========
 
-
-![equation](http://latex.codecogs.com/gif.latex?h_i%20%3D%20p_i%20&plus;%20%5Csum_%7Bj%3D1%7D%5Em%20c_j%20p%5Ej_i%2C)  
-
-
-
-
-
-
-
 ## What is it
 
 **Hedging** is an important aspect of portfolio management. Portfolio 
@@ -20,6 +11,12 @@ risk of their portfolio. Hedging is the primary mechanism through which
 they carry out these tasks. This project provie several ideas about how to 
 hedging, different ways to hedging(minimun variance, VaR, CVaR, etc.), and 
 the performance of hedging. 
+
+## the basic hedge equation
+<div align="center">
+  <img src="https://github.com/bjd1111/Finance/blob/master/hedge_proj/doc/formula.gif"><br>
+</div>
+
 
 
 ## Main Features
