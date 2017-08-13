@@ -12,7 +12,7 @@ they carry out these tasks. This project provie several ideas about how to
 hedging, different ways to hedging(minimun variance, VaR, CVaR, etc.), and 
 the performance of hedging. 
 
-## the basic hedge equation
+## the Basic Hedge Equation
 <div align="center">
   <img src="https://github.com/bjd1111/Finance/blob/master/hedge_proj/doc/formula.gif"><br>
 </div>
@@ -24,26 +24,9 @@ Here are just a few of the things that this project provide:
 
   - Gathering data from google finance(or fred, if specified)
   - Portfolio returns overview
-  - Caculate hedge ratio(weights for hedge securities) using different method(minimun variance, VaR, CVaR) under different lambda
-  - Perfomance 
-  - Make it [**easy to convert**][conversion] ragged,
-    differently-indexed data in other Python and NumPy data structures
-    into DataFrame objects
-  - Intelligent label-based [**slicing**][slicing], [**fancy
-    indexing**][fancy-indexing], and [**subsetting**][subsetting] of
-    large data sets
-  - Intuitive [**merging**][merging] and [**joining**][joining] data
-    sets
-  - Flexible [**reshaping**][reshape] and [**pivoting**][pivot-table] of
-    data sets
-  - [**Hierarchical**][mi] labeling of axes (possible to have multiple
-    labels per tick)
-  - Robust IO tools for loading data from [**flat files**][flat-files]
-    (CSV and delimited), [**Excel files**][excel], [**databases**][db],
-    and saving/loading data from the ultrafast [**HDF5 format**][hdfstore]
-  - [**Time series**][timeseries]-specific functionality: date range
-    generation and frequency conversion, moving window statistics,
-    moving window linear regressions, date shifting and lagging, etc.
+  - Caculate hedge ratio(weights for hedge securities) using different method(minimun variance, VaR, CVaR) under different lambda(           weights control of whole hedge securities)
+  - Perfomance analysis for different method (sharp ratio, cumulative return, variance)
+  
 
 
    [missing-data]: https://pandas.pydata.org/pandas-docs/stable/missing_data.html#working-with-missing-data
