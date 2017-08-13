@@ -4,11 +4,11 @@
 
 -----------------
 
-%
+
 \begin{equation}
     h_i = p_i + \sum_{j=1}^m c_j p^j_i,
 \end{equation}
-%
+
 
 ## What is it
 
