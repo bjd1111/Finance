@@ -1,10 +1,4 @@
-
-# coding: utf-8
-
-# # Import packages
-
-# In[228]:
-
+# -*- coding: utf-8 -*-
 
 
 import datetime as dt
@@ -20,7 +14,7 @@ from scipy.stats import norm
 
 # #  Data for portfolio and hedge securities
 
-# In[229]:
+
 
 class Portfolio:
     """the hedge portoflio     """
@@ -55,13 +49,12 @@ class Portfolio:
         return hedge_rtn
 
 
-# In[250]:
+
 
 class Hedge:
     
     """
     used for hedge purpose
-
     """ 
     
     def __init__(self,port_rtn, hedge_rtn, n, lambd):
@@ -212,6 +205,8 @@ class Hedge:
             var_h= np.var(portfolio_info)
             var_uh= np.var(r_pf)
             
+            
+            
             # VaR
             alpha=0.01
             VaR_h = norm.ppf(1-alpha)* np.std(portfolio_info)-np.mean(portfolio_info)
@@ -330,17 +325,6 @@ class Hedge:
  
 
 
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
 
 
 
@@ -353,7 +337,7 @@ class Hedge:
 
 # # portfolio
 
-# In[239]:
+
 
 
 
@@ -380,7 +364,7 @@ op = Hedge(port_rtn,hedge_rtn,n=1,lambd = 1)
 
 # # bonds
 
-# In[121]:
+
 
 
 # ++++++++++++++++++++  Change default setting here ++++++++++++++++++    
@@ -404,7 +388,6 @@ port_rtn = default_portfolio.port_rtn()
 op = Hedge(port_rtn,hedge_rtn,n=1,lambd = 1)   
 
 
-# In[ ]:
 
 
 
@@ -413,15 +396,17 @@ op = Hedge(port_rtn,hedge_rtn,n=1,lambd = 1)
 
 # ## gold
 
-# In[217]:
 
 start = dt.datetime(2006,1,1)  
 end = dt.datetime(2016,12,31) 
 
 cpi=data.DataReader('CPIAUCSL','fred', start, end )
 gold=data.DataReader('GOLDAMGBD228NLBM','fred', start , end )
-
-df = pd.concat([cpi,gold],axis=1).pct_change().dropna()
+df = pd.concat([cpi,gold],axis=1)
+df['GOLDAMGBD228NLBM']=df['GOLDAMGBD228NLBM'].fillna(method='pad')
+df=df.dropna()
+df=df.pct_change().dropna()
+###df = pd.concat([cpi,gold],axis=1).pct_change().dropna()
 df.columns = ['return','gold']
 
 # return for hedge securities
@@ -435,15 +420,18 @@ op = Hedge(port_rtn,hedge_rtn,n=1,lambd = 1)
 
 # ## tips
 
-# In[251]:
+
 
 start = dt.datetime(2006,1,1)  
 end = dt.datetime(2016,12,31) 
 
 cpi=data.DataReader('CPIAUCSL','fred', start, end )
 tip=data.DataReader('tip','google', start , end )['Close']
-
-df = pd.concat([cpi,tip],axis=1).pct_change().dropna()
+df = pd.concat([cpi,tip],axis=1)
+df['Close']=df['Close'].fillna(method='pad')
+df=df.dropna()
+df=df.pct_change().dropna()
+##df = pd.concat([cpi,tip],axis=1).pct_change().dropna()
 df.columns = ['return','tip']
 
 # return for hedge securities
@@ -455,22 +443,42 @@ port_rtn = pd.DataFrame(df['return'])
 op = Hedge(port_rtn,hedge_rtn,n=1,lambd = 1)      
 
 
-# In[ ]:
+
+#spy
+
+start = dt.datetime(2006,1,1)  
+end = dt.datetime(2016,12,31) 
+
+cpi=data.DataReader('CPIAUCSL','fred', start, end )
+spy=data.DataReader('spy','google', start , end )['Close']
+df = pd.concat([cpi,spy],axis=1)
+df['Close']=df['Close'].fillna(method='pad')
+df=df.dropna()
+df=df.pct_change().dropna()
+#df = pd.concat([cpi,spy],axis=1).pct_change().dropna()
+df.columns = ['return','spy']
+
+# return for hedge securities
+hedge_rtn =  pd.DataFrame(df['spy'])
+
+# return for securities to be hedged
+port_rtn = pd.DataFrame(df['return'])
+
+op = Hedge(port_rtn,hedge_rtn,n=1,lambd = 1)      
 
 
 
 
-# In[122]:
 
 port_rtn.shape
 
 
-# In[ ]:
 
 
 
 
-# In[123]:
+
+
 
 op.by_VaR()
 op.by_cvar()
@@ -479,60 +487,23 @@ op.by_std()
 
 # # graph for hedge ratio change over month
 
-# In[252]:
+
 
 #n = 5  # number of day or number of month (test)
 n = port_rtn.shape[0]-5+1  # number of day or number of month (all data)
 print 'period',n
 rf = 0.1/365
-pl='all'   # 'all','var', 'cvar', 'VaR', 'cumulative'
+pl='var'   # 'all','var', 'cvar', 'VaR', 'cumulative'
 total = pd.concat([op.roll('VaR',n,rf,pl),op.roll('cvar',n,rf,pl),op.roll('std',n,rf,pl)], axis=1)
 
 
-# In[ ]:
+
 
 # change return value if you want to see graph rather than culmulative return
 total.plot(title = str(pl)+' comparision')
 
+corgold=np.correlate(df['return'],df['gold'])
 
-# In[ ]:
+cortips=np.correlate(df['return'],df['tip'])
 
-
-
-
-# In[ ]:
-
-
-
-
-# # +++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
+corspy=np.correlate(df['return'],df['spy'])
