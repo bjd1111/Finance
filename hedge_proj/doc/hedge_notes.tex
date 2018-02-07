@@ -1,0 +1,96 @@
+\documentclass{amsart}
+\usepackage{amssymb}
+\usepackage{graphics}
+\usepackage{graphicx}
+\usepackage{verbatim}
+\usepackage{amssymb, epsfig}
+\usepackage[leqno]{amsmath}
+\usepackage{eurosym}
+\usepackage{listings}
+
+\def\P{\mathbb{P}}
+\def\Q{\mathbb{Q}}
+\def\E{\mathbb{E}}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{assumption}[theorem]{Assumption}
+
+\textheight=9.5 in
+\textwidth=6.5in
+\topmargin=-.0in
+\hoffset=-.75in
+
+\title{Hedging Project}
+%\author{Steve Taylor}
+%\email{steve98654@gmail.com}
+
+\begin{document}
+
+\maketitle
+
+Hedging is an important aspect of portfolio management.  Portfolio 
+managers are often required to stay within risk limits; for example, they cannot 
+let their volatility be to high or value-at-risk so low.  Also, there are times 
+when market conditions lead them to reduce the risk of their portfolio.  
+Hedging is the primary mechanism through which they carry out these tasks.  
+Below, we give a mathematical statement of the hedging problem, ideas on how 
+to start this project, and longer term opened ended questions that you 
+can investigate if interested.
+
+\section{Statement of the Hedging Problem}
+%
+Consider a portfolio that has daily prices $p_i$ for $i=1,\ldots,n$. Suppose you have 
+selected a set of $m$ hedging securities with prices $p^j_i$ for $j=1,\ldots,m$, 
+and consider the hedged portfolio whose daily price is 
+%
+\begin{equation}
+    h_i = p_i + \sum_{j=1}^m c_j p^j_i,
+\end{equation}
+%
+where here $c_j$ are weights defining the amount of hedging securities that 
+we will hold.  Hedging is the process of selecting the hedging securities 
+and associated weights $c_j$ in order to minimize a given risk metric of interest, 
+e.g. the volatility of the portfolio, the VaR, CVaR, etc.
+
+\section{Project Ideas}
+\textbf{Getting Started}:
+
+-- Start by implementing the minimum variance hedge (see attached slides for a 
+definition) for a single stock (say IBM) and a market ETF (say the SPY ETF).  You 
+should be able to get end of day data from google finance and using the pandas 
+datareader. 
+
+-- After designing an initial hedging strategy, develop analytics to examine how 
+   significantly your hedged portfolio reduces or increases several standard
+   risk and performance metrics of the original portfolio including the 
+   volatility, return, Sharpe Ratio, maximum drawdown, value-at-risk, 
+   beta of the portfolio to the market, etc.
+
+-- Investigate other hedging strategies besides the minimum variance hedge.  
+   For example, how can you try to minimize the variance of the 
+   return distribution, VaR, CVaR?  This will lead into optimization methods 
+   many of which are available in scipy.
+
+\textbf{Further Ideas}:
+
+-- Construct long/short portfolios of stocks in a given sector, e.g. financials, biotech, 
+   as well as a set of hedging securities for this sector.  How should you adapt 
+   your single stock/hedging security approach to this case? 
+
+-- Consider a fixed income portfolio that consists of corporate bonds.  What are the 
+   appropriate hedging securities for this portfolio? Can you get as significant risk 
+   reductions as you saw in the equity case in this example? 
+
+-- It is often said that gold is a hedge against inflation.  Can you quantify this? 
+   For example, assume that inflation (year on year CPI) is tradeable and try to 
+   hedge it with gold futures.  Can you get as good of hedging performance as in the 
+   equity examples that you considered?  Can you find other futures, bonds, or stocks 
+   that are better hedges for inflation than gold? 
+
+\end{document}
